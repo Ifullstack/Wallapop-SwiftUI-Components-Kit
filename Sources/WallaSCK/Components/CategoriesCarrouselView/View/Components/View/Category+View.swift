@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct CategoryView: View {
+public struct CategoryView: View {
     let model: CategoryModel
     
-    var body: some View {
+    public var body: some View {
         VStack {
             Image(systemName: model.image)
                 .font(.largeTitle)

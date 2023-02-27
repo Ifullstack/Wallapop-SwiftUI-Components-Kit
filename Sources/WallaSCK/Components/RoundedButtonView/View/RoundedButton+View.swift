@@ -7,30 +7,18 @@
 
 import SwiftUI
 
-enum RoundedButtonIconPosition {
-    case none,
-         left(iconType: RoundedButtonIconType, iconWidth: Double? = 16, iconHeight: Double? = 18),
-         right(iconType: RoundedButtonIconType, iconWidth: Double? = 16, iconHeight: Double? = 18)
-}
-
-enum RoundedButtonIconType {
-    case assetImage(path: String),
-         systemName(name: String),
-         emoticon(emoticon: String)
-}
-
-struct RoundedButtonView: View {
+public struct RoundedButtonView: View {
     
     let model: RoundedButtonModel
     let action: () -> Void
     
-    init(model: RoundedButtonModel,
+    public init(model: RoundedButtonModel,
          action: @escaping () -> Void) {
         self.model = model
         self.action = action
     }
     
-    var body: some View {
+    public var body: some View {
         Button(action: action) {
             HStack {
                 if let iconPosition = model.iconPosition {

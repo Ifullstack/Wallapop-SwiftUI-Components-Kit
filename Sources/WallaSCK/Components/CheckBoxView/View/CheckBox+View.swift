@@ -7,11 +7,15 @@
 
 import SwiftUI
 
-struct CheckBoxView: View {
+public struct CheckBoxView: View {
     
     @Binding var isChecked: Bool
 
-    var body: some View {
+    public init(isChecked: Binding<Bool>) {
+        _isChecked = isChecked
+    }
+    
+    public var body: some View {
         Image(systemName: isChecked ? "checkmark.square.fill" : "square")
             .resizable()
             .foregroundColor(isChecked ? .primaryColor : Color.secondary)
@@ -20,7 +24,7 @@ struct CheckBoxView: View {
             }
     }
     
-    func isCheckBoxChecked() -> Bool {
+    public func isCheckBoxChecked() -> Bool {
         return isChecked
     }
 }

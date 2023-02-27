@@ -7,8 +7,11 @@
 
 import SwiftUI
 
-struct CategoriesCarrouselView: View {
-    var body: some View {
+public struct CategoriesCarrouselView: View {
+    
+    public init() {}
+    
+    public var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(alignment: .center) {
                 ForEach(CategoryModel.getFakeCategoryModels(), id: \.self) { category in

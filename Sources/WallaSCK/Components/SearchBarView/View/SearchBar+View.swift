@@ -7,25 +7,50 @@
 
 import SwiftUI
 
-protocol SearchBarViewDelegate {
+public protocol SearchBarViewDelegate {
     func search(textToSearch: String)
 }
 
-struct SearchBarViewModel {
-    @Binding var textFieldIsFocused: Bool
+public struct SearchBarModel {
     var delegate: SearchBarViewDelegate?
-    var text: String = ""
-    var isEditing: Bool = false
-    var textfieldPlaceholder: String = "Search Wallapop"
+    var text: String 
+    var isEditing: Bool
+    var textfieldPlaceholder: String
     var searchSuggestions: [SearchSuggestionsModel]
     var recentSearches: [RecentSearchesModel]
+    
+    public init(delegate: SearchBarViewDelegate? = nil,
+                text: String = "",
+                isEditing: Bool = false,
+                textfieldPlaceholder: String = "Search Wallapop",
+                searchSuggestions: [SearchSuggestionsModel],
+                recentSearches: [RecentSearchesModel]) {
+        self.delegate = delegate
+        self.text = text
+        self.isEditing = isEditing
+        self.textfieldPlaceholder = textfieldPlaceholder
+        self.searchSuggestions = searchSuggestions
+        self.recentSearches = recentSearches
+    }
 }
 
-struct SearchBarView: View {
-    @State var model: SearchBarViewModel
+public struct SearchBarView: View {
+    
+    @Binding var textFieldIsFocused: Bool
+    @State var model: SearchBarModel
     @FocusState private var textFieldFocusState: Bool
     
-    var body: some View {
+    public init(textFieldIsFocused: Binding<Bool>,
+                searchBarModel: SearchBarModel,
+                textFieldFocusState: Bool) {
+        _textFieldIsFocused = textFieldIsFocused
+        _model = State(initialValue: searchBarModel)
+        self.textFieldFocusState = textFieldFocusState
+    }
+    
+    public var body: some View {
+  
+        
         VStack(alignment: model.isEditing ? .leading : .center) {
             HStack {
                 textfieldView
@@ -64,7 +89,7 @@ struct SearchBarView: View {
                 TextField(model.textfieldPlaceholder,
                           text: $model.text,
                           onEditingChanged: { editingChanged in
-                        model.textFieldIsFocused = editingChanged
+                        textFieldIsFocused = editingChanged
                     })
                     .focused($textFieldFocusState)
                     .foregroundColor(.gray)
@@ -106,7 +131,7 @@ struct SearchBarView: View {
     }
     
     private func cancelAction() {
-        model.textFieldIsFocused = false
+        textFieldIsFocused = false
         textFieldFocusState = false
         model.isEditing = false
         model.text = ""

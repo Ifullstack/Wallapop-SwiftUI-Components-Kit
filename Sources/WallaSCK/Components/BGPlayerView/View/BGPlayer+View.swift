@@ -8,16 +8,19 @@
 import SwiftUI
 import AVKit
 
-
-enum BGPlayerSource {
+public enum BGPlayerSource {
     case local(filename: String, type: String),
          external(url: String)
 }
 
-struct BGPlayerView: View {
+public struct BGPlayerView: View {
     let source: BGPlayerSource
-        
-    var body: some View {
+    
+    public init(source: BGPlayerSource) {
+        self.source = source
+    }
+    
+    public var body: some View {
         GeometryReader{ geo in
             PlayerView(source: source)
             .aspectRatio(contentMode: .fill)
@@ -30,15 +33,14 @@ struct BGPlayerView: View {
     }
 }
 
-struct PlayerView: UIViewRepresentable {
+public struct PlayerView: UIViewRepresentable {
 
     // Private properties
     let source: BGPlayerSource
     
-    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PlayerView>) {
-    }
+    public func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PlayerView>) {}
     
-    func makeUIView(context: Context) -> UIView {
+    public func makeUIView(context: Context) -> UIView {
         return LoopingPlayerUIView(frame: .zero,
                                    source: source)
     }

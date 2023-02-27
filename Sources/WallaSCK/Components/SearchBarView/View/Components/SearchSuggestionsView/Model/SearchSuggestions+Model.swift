@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct SearchSuggestionsModel: Hashable {
+public struct SearchSuggestionsModel: Hashable {
     let title: String
     let subtitle: String
     
-    static func getFakeSearchSuggestionsModels() -> [SearchSuggestionsModel] {
+    public static func getFakeSearchSuggestionsModels() -> [SearchSuggestionsModel] {
         return [
             SearchSuggestionsModel(title: "microondas",
                                    subtitle: "All categories"),

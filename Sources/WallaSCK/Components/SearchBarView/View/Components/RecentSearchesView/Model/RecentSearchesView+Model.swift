@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct RecentSearchesModel: Hashable {
+public struct RecentSearchesModel: Hashable {
     let title: String
     let subtitle: String
     let isFavourite: Bool
     
-    static func getRecentSearchesModels() -> [RecentSearchesModel] {
+    public static func getRecentSearchesModels() -> [RecentSearchesModel] {
         return [
             RecentSearchesModel(title: "microondas",
                                 subtitle: "All categories",
