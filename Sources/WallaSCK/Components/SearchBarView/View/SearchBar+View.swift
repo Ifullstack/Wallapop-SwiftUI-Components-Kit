@@ -36,16 +36,22 @@ public struct SearchBarModel {
 
 public struct SearchBarView: View {
     
+    // Propertie Wrappers
     @Binding var textFieldIsFocused: Bool
     @State var model: SearchBarModel
     @FocusState private var textFieldFocusState: Bool
     
+    // Private Properties
+    private var recentSearchesViewHeaderText: String = ""
+    
     public init(textFieldIsFocused: Binding<Bool>,
                 searchBarModel: SearchBarModel,
-                textFieldFocusState: Bool) {
+                textFieldFocusState: Bool,
+                recentSearchesViewHeaderText: String) {
         _textFieldIsFocused = textFieldIsFocused
         _model = State(initialValue: searchBarModel)
         self.textFieldFocusState = textFieldFocusState
+        self.recentSearchesViewHeaderText = recentSearchesViewHeaderText
     }
     
     public var body: some View {
@@ -67,7 +73,8 @@ public struct SearchBarView: View {
                     if model.recentSearches.isEmpty {
                         findNearYouTextView
                     } else {
-                        RecentSearchesView(delegate: self,
+                        RecentSearchesView(recentSearchesViewHeaderText: recentSearchesViewHeaderText,
+                                           delegate: self,
                                            recentSearches: model.recentSearches)
                     }
                 }

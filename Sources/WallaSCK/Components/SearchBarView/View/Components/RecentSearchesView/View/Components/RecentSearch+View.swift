@@ -22,7 +22,7 @@ struct RecentSearchView: View {
                 VStack(alignment: .leading) {
                     Text(recentSearchModel.title)
                         .foregroundColor(.black)
-                        .font(.title2)
+                        .font(.headline)
                         .fontWeight(.bold)
 
                     Text(recentSearchModel.subtitle)

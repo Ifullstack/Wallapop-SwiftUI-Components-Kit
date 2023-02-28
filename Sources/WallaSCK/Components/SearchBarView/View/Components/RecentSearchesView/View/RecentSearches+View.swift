@@ -13,39 +13,33 @@ protocol RecentSearchesViewDelegate {
 }
 
 struct RecentSearchesView: View {
-    
+    var recentSearchesViewHeaderText: String
     var delegate: RecentSearchesViewDelegate?
     var recentSearches: [RecentSearchesModel]
-    
+    // "Most sought after in your zone"
     var body: some View {
         VStack {
-            headerView.padding(.vertical)
+            DoubleHeaderView(title: recentSearchesViewHeaderText,
+                             delegate: self)
+                            .padding(.vertical)
+            
             ForEach(recentSearches, id: \.self) { recentSearch in
                 RecentSearchView(delegate: delegate,
                                  recentSearchModel: recentSearch)
             }
         }
     }
-    
-    var headerView: some View {
-        HStack {
-            Text("Recent searches")
-                .foregroundColor(.black.opacity(0.8))
-                .fontWeight(.bold)
-            Spacer()
-            Image(systemName: "xmark.circle")
-                .foregroundColor(.primaryColor)
-                .font(.title2)
-                .fontWeight(.medium)
-                .onTapGesture {
-                    delegate?.closeIconTapped()
-                }
-        }
+}
+
+extension RecentSearchesView: DoubleHeaderViewDelegate {
+    func rightViewTapped() {
+        delegate?.closeIconTapped()
     }
 }
 
 struct RecentSearches_View_Previews: PreviewProvider {
     static var previews: some View {
-        RecentSearchesView(recentSearches: RecentSearchesModel.getRecentSearchesModels())
+        RecentSearchesView(recentSearchesViewHeaderText: "Recent searches",
+                           recentSearches: RecentSearchesModel.getRecentSearchesModels())
     }
 }

@@ -13,7 +13,7 @@ public struct CategoryView: View {
     public var body: some View {
         VStack {
             Image(systemName: model.image)
-                .font(.largeTitle)
+                .font(.title)
                 .foregroundColor(.darkColor)
                 .frame(maxHeight: 36)
             Text(model.title)
