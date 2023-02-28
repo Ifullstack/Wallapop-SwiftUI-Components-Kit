@@ -23,7 +23,7 @@ public struct CategoriesCarrouselView: View {
     }
 }
 
-struct SwiftUIView_Previews: PreviewProvider {
+struct CategoriesCarrouselView_Previews: PreviewProvider {
     static var previews: some View {
         CategoriesCarrouselView()
     }

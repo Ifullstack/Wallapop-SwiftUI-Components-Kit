@@ -16,7 +16,7 @@ struct RecentSearchesView: View {
     var recentSearchesViewHeaderText: String
     var delegate: RecentSearchesViewDelegate?
     var recentSearches: [RecentSearchesModel]
-    // "Most sought after in your zone"
+    
     var body: some View {
         VStack {
             DoubleHeaderView(title: recentSearchesViewHeaderText,

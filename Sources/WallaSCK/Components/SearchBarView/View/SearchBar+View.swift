@@ -55,8 +55,6 @@ public struct SearchBarView: View {
     }
     
     public var body: some View {
-  
-        
         VStack(alignment: model.isEditing ? .leading : .center) {
             HStack {
                 textfieldView
