@@ -8,9 +8,9 @@
 import SwiftUI
 
 public struct ProductCarrouselView: View {
-    private let models: [ProductCardModel]
+    private let models: [ProductListingCardModel]
     
-    public init(models: [ProductCardModel]) {
+    public init(models: [ProductListingCardModel]) {
         self.models = models
     }
     
@@ -18,9 +18,7 @@ public struct ProductCarrouselView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
                 ForEach(models, id: \.self) { model in
-                    ProductCardView(model: model)
-                        .frame(width: 160)
-                    
+                    ProductCardCarrouselView(model: model).frame(width: 160)
                 }
             }
         }
@@ -29,6 +27,6 @@ public struct ProductCarrouselView: View {
 
 struct ProductCarrouselView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductCarrouselView(models: ProductCardModel.getFakesProductCardModels())
+        ProductCarrouselView(models: ProductListingCardModel.getFakesProductCardModelsForFeaturedItems())
     }
 }
