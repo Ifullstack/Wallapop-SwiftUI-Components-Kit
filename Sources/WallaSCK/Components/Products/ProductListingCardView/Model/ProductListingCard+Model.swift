@@ -13,17 +13,20 @@ public struct SimpleProductCardModel {
     let productPrice: String
     let featuredItems: [FeaturedItemModel]
     let isProductReserved: Bool
+    let isFavourite: Bool
     
     init(productImageUrl: String,
          productName: String,
          productPrice: String,
          featuredItems: [FeaturedItemModel] = [],
-         isProductReserved: Bool = false) {
+         isProductReserved: Bool = false,
+         isFavourite: Bool = false) {
         self.productImageUrl = productImageUrl
         self.productName = productName
         self.productPrice = productPrice
         self.featuredItems = featuredItems
         self.isProductReserved = isProductReserved
+        self.isFavourite = isFavourite
     }
 }
 
@@ -124,6 +127,8 @@ public struct ProductListingCardModel: Hashable, Identifiable {
                                                                          productPrice: "150 €",
                                                                          featuredItems: [FeaturedItemModel(systemName: "bird.fill")])),
             ProductListingCardModel(id: "4",
+                                    adView: AnyView(AdBannerView())),
+            ProductListingCardModel(id: "5",
                                     productModel: SimpleProductCardModel(productImageUrl: "https://images.unsplash.com/photo-1614631446501-abcf76949eca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
                                                                          productName: "Armario Nuevo",
                                                                          productPrice: "150 €",
@@ -134,8 +139,20 @@ public struct ProductListingCardModel: Hashable, Identifiable {
                                                                         ))
         ]
     }
-    
+}
 
+struct AdBannerView: View {
+    var body: some View {
+        VStack {
+            Text("Soy un anuncio")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding()
+        }.background {
+            RoundedRectangle(cornerRadius: 12)
+                .foregroundColor(.green)
+ 
+        }
+    }
 }
 
 

@@ -9,6 +9,13 @@ import SwiftUI
 
 struct ProductListingCardView: View {
     let model: ProductListingCardModel
+    let hasFavourite: Bool
+    
+    init(model: ProductListingCardModel,
+         hasFavourite: Bool = false) {
+        self.model = model
+        self.hasFavourite = hasFavourite
+    }
     
     var body: some View {        
         model.adView ?? AnyView(productCardContentView)
@@ -86,7 +93,6 @@ struct ProductListingCardView: View {
 
 struct ProductCardView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductListingCardView(model: ProductListingCardModel.getFakeProductCardModel())
-            .frame(width: 290, height: 290)
+        ProductListingCardView(model: ProductListingCardModel.getFakeProductCardModel()).frame(width: 290, height: 290)
     }
 }
