@@ -8,17 +8,23 @@
 import SwiftUI
 
 public struct ProductCarrouselView: View {
-    private let models: [ProductListingCardModel]
     
-    public init(models: [ProductListingCardModel]) {
+    // Private Properties
+    private let models: [ProductListingCardModel]
+    private let delegate: ProductListingCardViewDelegate?
+    
+    public init(models: [ProductListingCardModel],
+                delegate: ProductListingCardViewDelegate? = nil) {
         self.models = models
+        self.delegate = delegate
     }
     
     public var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
                 ForEach(models, id: \.self) { model in
-                    ProductListingCardView(model: model).frame(width: 160)
+                    ProductListingCardView(model: model,
+                                           delegate: delegate).frame(width: 160)
                 }
             }
         }

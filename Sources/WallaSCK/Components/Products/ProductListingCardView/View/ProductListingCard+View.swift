@@ -7,42 +7,82 @@
 
 import SwiftUI
 
+public protocol ProductListingCardViewDelegate {
+    func cardTapped(model: ProductListingCardModel)
+    func favouriteTapped(model: ProductListingCardModel)
+}
+
 struct ProductListingCardView: View {
-    let model: ProductListingCardModel
-    let hasFavourite: Bool
+    
+    // Private Properties
+    private let model: ProductListingCardModel
+    private let hasFavourite: Bool
+    private let delegate: ProductListingCardViewDelegate?
+    @State private var isProductFavourite: Bool
     
     init(model: ProductListingCardModel,
-         hasFavourite: Bool = false) {
+         hasFavourite: Bool = false,
+         delegate: ProductListingCardViewDelegate? = nil) {
         self.model = model
         self.hasFavourite = hasFavourite
+        self.delegate = delegate
+        _isProductFavourite = State(initialValue: model.productModel?.isFavourite ?? false)
     }
     
     var body: some View {        
         model.adView ?? AnyView(productCardContentView)
     }
-    
+}
+
+// MARK: - Product Card Content
+extension ProductListingCardView {
     var productCardContentView: some View {
         VStack {
-            productImageView
-            HStack {
-                Text(model.productModel?.productPrice ?? "")
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.black)
-                Spacer()
+            productImageView.onTapGesture {
+                delegate?.cardTapped(model: model)
             }
-            HStack {
-                Text(model.productModel?.productName ?? "")
-                    .font(.subheadline)
-                    .fontWeight(.regular)
-                    .foregroundColor(.gray)
-                    .lineLimit(1)
-
-                Spacer()
-            }.offset(y:4)
+            productPriceView
+            productNameView
         }
     }
     
+    var productPriceView: some View {
+        HStack {
+            Text(model.productModel?.productPrice ?? "")
+                .font(.headline)
+                .fontWeight(.semibold)
+                .foregroundColor(.black)
+            Spacer()
+            if hasFavourite {
+                Image(systemName: isProductFavourite ? "heart.fill" : "heart")
+                       .resizable()
+                       .foregroundColor(isProductFavourite ? .red : .black)
+                       .frame(width: 18,
+                              height: 16)
+                       .padding(.trailing, 4)
+                       .onTapGesture {
+                           isProductFavourite.toggle()
+                           delegate?.favouriteTapped(model: model)
+                       }
+            }
+        }
+    }
+    
+    var productNameView: some View {
+        HStack {
+            Text(model.productModel?.productName ?? "")
+                .font(.subheadline)
+                .fontWeight(.regular)
+                .foregroundColor(.gray)
+                .lineLimit(1)
+
+            Spacer()
+        }.offset(y:4)
+    }
+}
+
+// MARK: - Product Image View
+extension ProductListingCardView {
     var productImageView: some View {
         ZStack {
             asyncImageView.overlay(alignment: .topTrailing) {

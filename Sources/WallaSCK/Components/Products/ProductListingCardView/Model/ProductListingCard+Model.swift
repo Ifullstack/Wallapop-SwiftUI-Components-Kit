@@ -125,7 +125,9 @@ public struct ProductListingCardModel: Hashable, Identifiable {
                                     productModel: SimpleProductCardModel(productImageUrl: "https://images.unsplash.com/photo-1614631446501-abcf76949eca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
                                                                          productName: "Armario Nuevo",
                                                                          productPrice: "150 €",
-                                                                         featuredItems: [FeaturedItemModel(systemName: "bird.fill")])),
+                                                                         featuredItems: [FeaturedItemModel(systemName: "bird.fill")],
+                                                                         isFavourite: true
+                                    )),
             ProductListingCardModel(id: "4",
                                     adView: AnyView(AdBannerView())),
             ProductListingCardModel(id: "5",

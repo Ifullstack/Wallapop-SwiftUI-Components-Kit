@@ -9,12 +9,17 @@ import SwiftUI
 
 public struct ProductCarrouselGridView: View {
     
+    // Private Properties
     private let models: [ProductListingCardModel]
-    private let columns = [GridItem(.flexible()),
-                           GridItem(.flexible())]
+    private let columns: [GridItem]
+    private let delegate: ProductListingCardViewDelegate?
     
-    public init(models: [ProductListingCardModel]) {
+    public init(models: [ProductListingCardModel],
+                columns: [GridItem] = [GridItem(.flexible()), GridItem(.flexible())],
+                delegate: ProductListingCardViewDelegate? = nil) {
         self.models = models
+        self.columns = columns
+        self.delegate = delegate
     }
     
     public var body: some View {
@@ -22,7 +27,9 @@ public struct ProductCarrouselGridView: View {
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(models, id: \.self) { model in
                     GridRow {
-                        ProductListingCardView(model: model).frame(width: 160)
+                        ProductListingCardView(model: model,
+                                               hasFavourite: true,
+                                               delegate: delegate).frame(width: 160)
                     }
                 }
             }
