@@ -18,7 +18,7 @@ public struct ProductCarrouselView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
                 ForEach(models, id: \.self) { model in
-                    ProductCardCarrouselView(model: model).frame(width: 160)
+                    ProductListingCardView(model: model).frame(width: 160)
                 }
             }
         }
@@ -27,6 +27,6 @@ public struct ProductCarrouselView: View {
 
 struct ProductCarrouselView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductCarrouselView(models: ProductListingCardModel.getFakesProductCardModelsForFeaturedItems())
+        ProductCarrouselView(models:ProductListingCardModel.getFakesProductCardModelsForFeaturedItems())
     }
 }

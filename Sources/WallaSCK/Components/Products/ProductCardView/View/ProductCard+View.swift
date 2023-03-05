@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProductCardCarrouselView: View {
+struct ProductListingCardView: View {
     let model: ProductListingCardModel
     
     var body: some View {        
@@ -18,14 +18,14 @@ struct ProductCardCarrouselView: View {
         VStack {
             productImageView
             HStack {
-                Text(model.productPrice)
+                Text(model.productModel?.productPrice ?? "")
                     .font(.headline)
                     .fontWeight(.semibold)
                     .foregroundColor(.black)
                 Spacer()
             }
             HStack {
-                Text(model.productName)
+                Text(model.productModel?.productName ?? "")
                     .font(.subheadline)
                     .fontWeight(.regular)
                     .foregroundColor(.gray)
@@ -41,17 +41,16 @@ struct ProductCardCarrouselView: View {
             asyncImageView.overlay(alignment: .topTrailing) {
                 asyncImageviewTopTrailingOverlay
             }.overlay(alignment: .topLeading) {
-                if model.isProductReserved {
+                if model.productModel?.isProductReserved ?? false {
                     asyncImageviewTopLeadingOverlay
                 }
-                
             }
         }
     }
     
     var asyncImageviewTopTrailingOverlay: some View {
         VStack(spacing: 0) {
-            ForEach(model.featuredItems, id: \.self) { item in
+            ForEach(model.productModel?.featuredItems ?? [], id: \.self) { item in
                 FeatureItemView(systemName: item.systemName,
                                 foregroundColor: item.foregroundColor,
                                 width: item.width,
@@ -71,7 +70,7 @@ struct ProductCardCarrouselView: View {
     }
     
     var asyncImageView: some View {
-        AsyncImage(url: URL(string: model.productImageUrl),
+        AsyncImage(url: URL(string: model.productModel?.productImageUrl ?? ""),
                    content: { image in
                 image.resizable()
                      .aspectRatio(contentMode: .fill)
@@ -87,7 +86,7 @@ struct ProductCardCarrouselView: View {
 
 struct ProductCardView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductCardCarrouselView(model: ProductListingCardModel.getFakeProductCardModel())
+        ProductListingCardView(model: ProductListingCardModel.getFakeProductCardModel())
             .frame(width: 290, height: 290)
     }
 }
