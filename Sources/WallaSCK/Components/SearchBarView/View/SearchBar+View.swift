@@ -11,34 +11,11 @@ public protocol SearchBarViewDelegate {
     func search(textToSearch: String)
 }
 
-public struct SearchBarModel {
-    var delegate: SearchBarViewDelegate?
-    var text: String 
-    var isEditing: Bool
-    var textfieldPlaceholder: String
-    var searchSuggestions: [SearchSuggestionsModel]
-    var recentSearches: [RecentSearchesModel]
-    
-    public init(delegate: SearchBarViewDelegate? = nil,
-                text: String = "",
-                isEditing: Bool = false,
-                textfieldPlaceholder: String = "Search Wallapop",
-                searchSuggestions: [SearchSuggestionsModel],
-                recentSearches: [RecentSearchesModel]) {
-        self.delegate = delegate
-        self.text = text
-        self.isEditing = isEditing
-        self.textfieldPlaceholder = textfieldPlaceholder
-        self.searchSuggestions = searchSuggestions
-        self.recentSearches = recentSearches
-    }
-}
-
 public struct SearchBarView: View {
     
     // Propertie Wrappers
-    @Binding var textFieldIsFocused: Bool
-    @State var model: SearchBarModel
+    @Binding private var textFieldIsFocused: Bool
+    @State private var model: SearchBarModel
     @FocusState private var textFieldFocusState: Bool
     
     // Private Properties
@@ -46,15 +23,32 @@ public struct SearchBarView: View {
     
     public init(textFieldIsFocused: Binding<Bool>,
                 searchBarModel: SearchBarModel,
-                textFieldFocusState: Bool,
                 recentSearchesViewHeaderText: String) {
-        _textFieldIsFocused = textFieldIsFocused
         _model = State(initialValue: searchBarModel)
-        self.textFieldFocusState = textFieldFocusState
+        _textFieldIsFocused = textFieldIsFocused
         self.recentSearchesViewHeaderText = recentSearchesViewHeaderText
     }
     
     public var body: some View {
+        contentView
+    }
+        
+    private func searchAction(textToSearch: String) {
+        model.delegate?.search(textToSearch: textToSearch)
+        cancelAction()
+    }
+    
+    private func cancelAction() {
+        textFieldIsFocused = false
+        textFieldFocusState = false
+        model.isEditing = false
+        model.text = ""
+    }
+}
+
+// MARK: - Views
+extension SearchBarView {
+    var contentView: some View {
         VStack(alignment: model.isEditing ? .leading : .center) {
             HStack {
                 textfieldView
@@ -92,16 +86,16 @@ public struct SearchBarView: View {
                     .opacity(0.5)
 
                 TextField(model.textfieldPlaceholder,
-                          text: $model.text,
-                          onEditingChanged: { editingChanged in
-                        textFieldIsFocused = editingChanged
-                    })
+                          text: $model.text)
                     .focused($textFieldFocusState)
                     .foregroundColor(.gray)
                     .opacity(0.5)
                     .fontWeight(.medium)
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
+                    .onTapGesture {
+                        textFieldIsFocused = true
+                    }
                     .onChange(of: model.text) { newValue in
                         model.isEditing = !newValue.isEmpty
                     }
@@ -111,9 +105,9 @@ public struct SearchBarView: View {
                 Spacer()
             }.padding(.horizontal)
         }.frame(height: 44)
-            .shadow(color: .gray.opacity(0.2), radius: 8, x: 0, y: 0)
+         .shadow(color: .gray.opacity(0.2), radius: 8, x: 0, y: 0)
     }
-    
+  
     var clearButtonView: some View {
         Text("Cancel")
             .foregroundColor(.primaryColor)
@@ -128,18 +122,6 @@ public struct SearchBarView: View {
             .foregroundColor(.black)
             .fontWeight(.bold)
             .padding(.vertical)
-    }
-    
-    private func searchAction(textToSearch: String) {
-        model.delegate?.search(textToSearch: textToSearch)
-        cancelAction()
-    }
-    
-    private func cancelAction() {
-        textFieldIsFocused = false
-        textFieldFocusState = false
-        model.isEditing = false
-        model.text = ""
     }
 }
 

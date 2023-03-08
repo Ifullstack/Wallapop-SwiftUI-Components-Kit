@@ -9,13 +9,20 @@ import SwiftUI
 
 public struct RoundedButtonView: View {
     
-    let model: RoundedButtonModel
-    let action: () -> Void
+    // States
+    @Binding private var isDisabled: Bool
+    
+    // Private properties
+    private let model: RoundedButtonModel
+    private let action: () -> Void
+    
     
     public init(model: RoundedButtonModel,
-         action: @escaping () -> Void) {
+                isDisabled: Binding<Bool> = .constant(false),
+                action: @escaping () -> Void) {
         self.model = model
         self.action = action
+        _isDisabled = isDisabled
     }
     
     public var body: some View {
@@ -57,8 +64,9 @@ public struct RoundedButtonView: View {
         }.frame(maxWidth: .infinity)
          .frame(height: 10)
          .padding()
-         .background(model.backgroundColor)
+         .background(model.backgroundColor.opacity(isDisabled ? 0.3 : 1))
          .modifier(ButtonStyle(isRoundedRectangle: model.isRoundedRectangle))
+         .disabled(isDisabled)
     }
     
     struct IconAssetImageView: View {
@@ -77,16 +85,6 @@ public struct RoundedButtonView: View {
     }
 }
 
-struct RoundedButton_View_Previews: PreviewProvider {
-    static var previews: some View {
-        RoundedButtonView(model: RoundedButtonModel(buttonText: "Continuar con Apple",
-                                                    backgroundColor: .white,
-                                                    textColor: .black,
-                                                    iconPosition: .left(iconType: .assetImage(path: "logoApple"))),
-                          action: RoundedButton_View_Previews.fakeAction)
-    }
 
-    static func fakeAction() {}
-}
 
 
