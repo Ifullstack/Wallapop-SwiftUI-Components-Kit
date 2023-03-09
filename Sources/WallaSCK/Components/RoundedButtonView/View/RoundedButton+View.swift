@@ -16,7 +16,6 @@ public struct RoundedButtonView: View {
     private let model: RoundedButtonModel
     private let action: () -> Void
     
-    
     public init(model: RoundedButtonModel,
                 isDisabled: Binding<Bool> = .constant(false),
                 action: @escaping () -> Void) {
@@ -26,6 +25,13 @@ public struct RoundedButtonView: View {
     }
     
     public var body: some View {
+        contentView
+    }
+}
+
+// MARK: - Views
+extension RoundedButtonView {
+    var contentView: some View {
         Button(action: action) {
             HStack {
                 if let iconPosition = model.iconPosition {
@@ -38,7 +44,7 @@ public struct RoundedButtonView: View {
                             IconAssetImageView(iconType: iconType)
                                 .frame(width: iconWidth ?? 16,
                                        height: iconHeight ?? 20)
-                    case .right(_,_,_):
+                        case .right(_,_,_):
                             Text("")
                     }
                 }
@@ -84,7 +90,4 @@ public struct RoundedButtonView: View {
         }
     }
 }
-
-
-
 

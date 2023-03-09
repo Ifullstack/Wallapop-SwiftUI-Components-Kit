@@ -18,18 +18,12 @@ public struct PasswordAuthTextFieldsView: View {
     // Private Properties
     private var placeHolder: String
  
-    
     public init(placeHolder: String) {
         self.placeHolder = placeHolder
-       
     }
     
     public var body: some View {
         contentView
-    }
-    
-    func getTextSelected() -> String {
-         textFieldText
     }
 }
 
@@ -41,7 +35,6 @@ extension PasswordAuthTextFieldsView {
                 Text(placeHolder)
                     .modifier(PlaceHolderTextFieldStyle())
             }
-            
             HStack {
                 if isPasswordVisible {
                     TextField(placeHolder,
@@ -65,11 +58,16 @@ extension PasswordAuthTextFieldsView {
                          isPasswordVisible.toggle()
                      }
             }
-                    
-            
             Divider()
                 .offset(y:12)
         }
+    }
+}
+
+// MARK: - Exposed Methods
+extension PasswordAuthTextFieldsView {
+    func getTextSelected() -> String {
+         textFieldText
     }
 }
 

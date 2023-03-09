@@ -27,10 +27,6 @@ public struct DefaultAuthTextFieldsView: View {
     public var body: some View {
         contentView
     }
-    
-    func getTextSelected() -> String {
-         textFieldText
-    }
 }
 
 // MARK: - Views
@@ -57,6 +53,12 @@ extension DefaultAuthTextFieldsView {
     }
 }
 
+// MARK: - Exposed Methods
+extension DefaultAuthTextFieldsView {
+    func getTextSelected() -> String {
+         textFieldText
+    }
+}
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {

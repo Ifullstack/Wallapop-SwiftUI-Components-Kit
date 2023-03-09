@@ -32,18 +32,6 @@ public struct SearchBarView: View {
     public var body: some View {
         contentView
     }
-        
-    private func searchAction(textToSearch: String) {
-        model.delegate?.search(textToSearch: textToSearch)
-        cancelAction()
-    }
-    
-    private func cancelAction() {
-        textFieldIsFocused = false
-        textFieldFocusState = false
-        model.isEditing = false
-        model.text = ""
-    }
 }
 
 // MARK: - Views
@@ -132,6 +120,7 @@ extension SearchBarView: SearchSuggestionsViewDelegate {
     }
 }
 
+// MARK: - RecentSearchesViewDelegate
 extension SearchBarView: RecentSearchesViewDelegate {
     func searchTapped(textToSearch: String) {
         searchAction(textToSearch: textToSearch)
@@ -139,5 +128,20 @@ extension SearchBarView: RecentSearchesViewDelegate {
     
     func closeIconTapped() {
         model.recentSearches = []
+    }
+}
+
+// MARK: - Private Methods
+extension SearchBarView {
+    private func searchAction(textToSearch: String) {
+        model.delegate?.search(textToSearch: textToSearch)
+        cancelAction()
+    }
+    
+    private func cancelAction() {
+        textFieldIsFocused = false
+        textFieldFocusState = false
+        model.isEditing = false
+        model.text = ""
     }
 }
