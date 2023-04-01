@@ -49,12 +49,20 @@ To use the components in your project, simply import the WallapopSwiftUIComponen
 
 ```swift
 import SwiftUI
-import WallapopSwiftUIComponentsKit
+import WallaSCK
 
 struct ContentView: View {
     var body: some View {
-        WallapopButton(title: "Tap me!") {
-            print("Button tapped")
+        textFieldsView
+    }
+    
+    var textFieldsView: some View {
+        VStack {
+            DefaultAuthTextFieldsView(placeHolder: "Email",
+                                      keyboardType: .emailAddress)
+                .padding(.vertical)
+            PasswordAuthTextFieldsView(placeHolder: "Password")
+                .padding(.vertical)
         }
     }
 }
