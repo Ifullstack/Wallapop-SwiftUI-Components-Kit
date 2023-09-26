@@ -1,9 +1,10 @@
 # Wallapop SwiftUI Components Kit
 
+![SwiftVideoPlayerKit Banner](https://caneallestacursos.com/home/wp-content/uploads/2023/09/Clon-de-Wallapop-Udemy-Promo.png)  
+
 Welcome to Wallapop SwiftUI Components Kit! This repository contains a collection of reusable SwiftUI components, inspired by the Wallapop app. The components are designed with a clean and modern look to make it easy for you to integrate them into your own projects.
 
 They are part of my course on Youtube and Udemy here I leave you links to them in case you are interested 😉👇
-
 https://www.youtube.com/channel/UCs_ZcQxIWB4eNvyxpseA7vA?sub_confirmation=1.
 
 ## Table of Contents
@@ -18,10 +19,10 @@ https://www.youtube.com/channel/UCs_ZcQxIWB4eNvyxpseA7vA?sub_confirmation=1.
 
 ## Features
 
-- Reusable SwiftUI components
-- Wallapop app-inspired design
-- Easy integration into your projects
-- Comprehensive documentation
+- 🎨 Reusable SwiftUI components
+- 📱 Wallapop app-inspired design
+- 🔌 Easy integration into your projects
+- 📝 Comprehensive documentation
 
 ## Requirements
 
